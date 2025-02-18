@@ -1,0 +1,11 @@
+Model Information:
+* title:	street scene
+* source:	https://sketchfab.com/3d-models/street-scene-0605fa6bd4694681b39eb6bacb61b609
+* author:	Jelvehkar (https://sketchfab.com/alihoseini13000)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "street scene" (https://sketchfab.com/3d-models/street-scene-0605fa6bd4694681b39eb6bacb61b609) by Jelvehkar (https://sketchfab.com/alihoseini13000) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
