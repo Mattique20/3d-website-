@@ -24,11 +24,11 @@ const Scene = () => {
       <directionalLight intensity={1.5} position={[5, 5, 5]} />
       <pointLight position={[5, 5, 5]} intensity={15} />
 
-      <CarModel carRef={carRef} />
+      <CarModel carRef={carRef} roadCount={numberOfRoads} roadSpacing={roadSpacing} />
 
       {/* Render multiple roads */}
       {Array.from({ length: numberOfRoads }).map((_, i) => (
-        <RoadModel key={i} position={[i * roadSpacing, 0, 0]} /> // Placing roads in front of each other
+        <RoadModel key={i} position={[i * roadSpacing, 0.25, 0]} /> // Placing roads in front of each other
       ))}
 
       <CameraRig carRef={carRef} />
