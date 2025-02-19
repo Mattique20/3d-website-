@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import CarModel from "./car";
-import RoadModel from "./Roadmodel";  
-import { Environment } from '@react-three/drei'
+import RoadModel from "./Roadmodel";
+import CameraRig from "./Camera.jsx";
+
 const Scene = () => {
-    return (
-        <Canvas camera={{ position: [1, 1, 1] }}>
-            <Environment  files="./src/assets/venice_sunset_4k.hdr"  preset="sunset" background backgroundBlurriness={0.5} />
-            <ambientLight />  
-            <directionalLight intensity={1.5} position={[5, 5, 5]} />  
-            <pointLight position={[5, 5, 5]} intensity={15} />
-            
-            <CarModel />
-            <RoadModel />
-            <OrbitControls />
-        </Canvas>
-    );
+  const carRef = useRef();
+  
+  // Adjust the number and spacing of road segments
+  const numberOfRoads = 5; // Change this to add more roads
+  const roadSpacing = 85;  // Adjust spacing between each road
+  
+  return (
+    <Canvas>
+      <Environment
+        files="./public/venice_sunset_4k.hdr"
+        preset="sunset"
+        background
+        backgroundBlurriness={0.5}
+      />
+      <ambientLight />
+      <directionalLight intensity={1.5} position={[5, 5, 5]} />
+      <pointLight position={[5, 5, 5]} intensity={15} />
+
+      <CarModel carRef={carRef} />
+
+      {/* Render multiple roads */}
+      {Array.from({ length: numberOfRoads }).map((_, i) => (
+        <RoadModel key={i} position={[i * roadSpacing, 0, 0]} /> // Placing roads in front of each other
+      ))}
+
+      <CameraRig carRef={carRef} />
+    </Canvas>
+  );
 };
 
 export default Scene;
