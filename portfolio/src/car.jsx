@@ -2,20 +2,33 @@ import React, { useRef, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
-const CarModel = ({ carRef, mobileControls }) => {
-    const { scene } = useGLTF("/car/scene.gltf");
+const CarModel = ({ carRef }) => {
+    const { scene } = useGLTF("/car/scene.gltf");    
     const [moving, setMoving] = useState(false);
     const [turning, setTurning] = useState(null);
 
     // Movement & Turning Speed
     const speed = 0.1;
     const turnSpeed = 0.05;
-
+  
     useEffect(() => {
         if (!scene) return;
 
+        // Debugging: Log all objects in the scene
         scene.traverse((child) => console.log(child.name));
 
+        const frontWheels = ["Object_11", "Object_12", "Object_88", "Object_89"];
+        const allWheels = ["Object_9", "Object_12", "Object_8", "Object_11", "Object_88", "Object_89", "Object_117", "Object_118"];
+
+        // Set default rotation for front wheels
+        frontWheels.forEach(name => {
+            const wheel = scene.getObjectByName(name);
+            if (wheel) {
+                wheel.rotation.set(0, Math.PI * (16 / 180), Math.PI * (-10 / 180));
+            }
+        });
+
+        // Keyboard event listeners
         const handleKeyDown = (event) => {
             const key = event.key.toLowerCase();
             if (key === "w" || key === "s") {
@@ -48,15 +61,6 @@ const CarModel = ({ carRef, mobileControls }) => {
     useFrame(() => {
         if (!carRef.current || !scene) return;
 
-        // 🚗 **Mobile Controls Handling**
-        if (mobileControls.forward) setMoving("w");
-        else if (mobileControls.backward) setMoving("s");
-        else setMoving(false);
-
-        if (mobileControls.left) setTurning("left");
-        else if (mobileControls.right) setTurning("right");
-        else setTurning(null);
-
         // 🚗 **Move Car**
         if (moving === "w") carRef.current.translateZ(speed);
         if (moving === "s") carRef.current.translateZ(-speed);
@@ -79,7 +83,7 @@ const CarModel = ({ carRef, mobileControls }) => {
             });
         }
 
-        // 🚗 **Turn Front Wheels When Pressing A/D or Mobile Buttons**
+        // 🚗 **Turn Front Wheels When Pressing A/D**
         const frontWheels = ["Object_11", "Object_12", "Object_88", "Object_89"];
         frontWheels.forEach(name => {
             const wheel = scene.getObjectByName(name);
