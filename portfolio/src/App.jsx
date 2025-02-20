@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei"; 
-import CarModel from "./Car";  
-import RoadModel from "./RoadModel"; 
+import CarModel from "./car";  
+import RoadModel from "./Roadmodel"; 
 import CameraRig from "./Camera";  
 import LoadingScreen from "./LoadingScreen";  
 
