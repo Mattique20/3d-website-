@@ -132,7 +132,7 @@ const CarModel = ({ carRef }) => {
                     wheel.rotation.set(0, Math.PI * (52 / 180), Math.PI * (-10 / 180)); // Turn left
                     wheel.rotateX(0.1);
                 } else if (turning === "right") {
-                    wheel.rotation.set(0, 0, 0); // Turn right
+                    wheel.rotation.set(0, Math.PI * (-10 / 180), 0); // Turn right
                     wheel.rotateX(0.1);
                     
                 } else {
