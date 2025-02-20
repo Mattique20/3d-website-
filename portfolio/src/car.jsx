@@ -36,7 +36,7 @@ const CarModel = ({ carRef, roadCount, roadSpacing }) => {
        if (wheel) wheel.rotateX(0.1);
     });
     }
-  
+    
     
   });
 
