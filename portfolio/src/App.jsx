@@ -38,7 +38,8 @@ const Scene = () => {
           <RoadModel key={i} position={[i * roadSpacing, 0.25, 0]} />
         ))}
 
-        <CameraRig carRef={carRef} />
+        <CameraRig carRef={carRef} roadCount={numberOfRoads} roadSpacing={roadSpacing} />
+
       </Canvas>
     </>
   );

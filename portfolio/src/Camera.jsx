@@ -3,26 +3,46 @@ import { OrbitControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 
-const CameraRig = ({ carRef, roadWidth = 100, roadLength = 10 }) => {
+const CameraRig = ({ carRef, roadCount=5, roadSpacing, roadWidth = 100 }) => {
     const controlsRef = useRef();
 
     useFrame(({ camera }) => {
         if (!carRef?.current || !controlsRef?.current) return;
 
-        const carPos = carRef.current.position.clone(); // Clone to prevent modifying original object
+        const carPos = carRef.current.position.clone(); // Clone car position
 
-        // Offset the camera position (closer behind and slightly above the car)
-        const cameraOffset = new Vector3(-5, 2, 0); // Adjusted for a closer view
-        const targetPosition = carPos.clone().add(cameraOffset);
+        // Calculate total road length dynamically
+        const roadLength = roadCount * roadSpacing;
 
-        // Smooth transition for a natural effect
-        
-        camera.position.lerp(targetPosition, .04); // Faster transition for a more responsive feel
-        controlsRef.current.target.lerp(carPos, 0.001);
+        // Offset the camera (behind and slightly above the car)
+        const cameraOffset = new Vector3(-5, 3, 0);
+        let targetPosition = carPos.clone().add(cameraOffset);
+
+        // Clamp camera within full road boundaries
+        const minX = -roadWidth / 2;
+        const maxX = roadWidth / 2;
+        const minZ = -roadLength / 2;
+        const maxZ = roadLength / 2;
+
+        //targetPosition.x = Math.max(minX, Math.min(maxX, targetPosition.x));
+        //targetPosition.z = Math.max(minZ, Math.min(maxZ, targetPosition.z));
+
+        // Smoothly move the camera without getting stuck
+        camera.position.lerp(targetPosition, 0.1);
+
+        // Ensure camera always follows the car
+        controlsRef.current.target.copy(carPos);
         controlsRef.current.update();
     });
 
-    return <OrbitControls ref={controlsRef} enableDamping={true} dampingFactor={0.2} />;
+    return (
+        <OrbitControls
+            ref={controlsRef}
+            enableDamping={true}
+            dampingFactor={0.2}
+            maxPolarAngle={Math.PI / 2.2} // Prevents camera from looking under the car
+        />
+    );
 };
 
 export default CameraRig;
