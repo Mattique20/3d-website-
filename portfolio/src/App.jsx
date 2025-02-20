@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment } from "@react-three/drei";
-import CarModel from "./car";
-import RoadModel from "./Roadmodel";
-import CameraRig from "./Camera.jsx";
-import LoadingScreen from "./LoadingScreen"; // Import loading component
+import { Environment } from "@react-three/drei"; 
+import CarModel from "./Car";  
+import RoadModel from "./RoadModel"; 
+import CameraRig from "./Camera";  
+import LoadingScreen from "./LoadingScreen";  
 
 const Scene = () => {
   const carRef = useRef();
@@ -22,9 +22,9 @@ const Scene = () => {
     <>
       {isLoading && <LoadingScreen />}
       <Canvas onCreated={() => setIsLoading(false)}>
-        <Environment
-          files="./public/venice_sunset_4k.hdr"
-          preset="sunset"
+        <Environment 
+          files="/venice_sunset_4k.hdr" 
+          preset="sunset" 
           background
           backgroundBlurriness={0.5}
         />
@@ -39,7 +39,6 @@ const Scene = () => {
         ))}
 
         <CameraRig carRef={carRef} roadCount={numberOfRoads} roadSpacing={roadSpacing} />
-
       </Canvas>
     </>
   );
